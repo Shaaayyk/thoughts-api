@@ -30,6 +30,14 @@ async function create(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+    
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
 module.exports = {
   index,
   show,
