@@ -11,6 +11,21 @@ async function create(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+    const thought = await ThoughtModel.findOne({ 'additions._id': req.params.id })
+    if (!thought) {
+      return res.status(500).json({ error })
+    }
+    const addition = thought.additions.id(req.params.id)
+    addition.set(req.body)
+    await thought.save()
+    res.status(201).json({thought})
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
 async function deleteAddition (req, res) {
   try {
     const thought = await ThoughtModel.findOne({ 'additions._id': req.params.id })
@@ -27,5 +42,6 @@ async function deleteAddition (req, res) {
 
 module.exports = {
   create,
+  update,
   delete: deleteAddition,
 }
