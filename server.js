@@ -5,6 +5,7 @@ require('dotenv').config();
 require('./config/database');
 
 const thoughtsRouter = require('./routes/thoughts.js')
+const additionsRouter = require('./routes/additions.js')
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/thoughts', thoughtsRouter);
+app.use('/api', additionsRouter);
 
 
 const port = process.env.PORT || 3001;
