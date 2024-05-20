@@ -1,0 +1,37 @@
+const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
+
+
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, lowercase: true, unique: true },
+  password: { type: String, required: true },
+  firstName: { type: String },
+  lastName: { type: String },
+}, {
+  timestamps: true,
+})
+
+userSchema.set('toJSON', {
+  transform: function (doc, ret, options) {
+    delete ret.password
+    return ret
+  }
+})
+
+userSchema.set('toObject', {
+  transform: function (doc, ret, options) {
+    delete ret.password
+    return ret
+  }
+})
+
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password')) return next()
+  bcrypt.hash(this.password, process.env.SALT_ROUNDS, function (error, hash) {
+    if (error) return next(error)
+    this.password = hash
+    next()
+  })
+})
+
+module.exports = mongoose.model('User', userSchema)
