@@ -5,9 +5,9 @@ async function create(req, res) {
     const thought = await ThoughtModel.findById(req.params.id)
     thought.additions.push(req.body)
     await thought.save()
-    res.status(201).json({thought})
+    return res.status(201).json({thought})
   } catch (error) {
-    res.status(500).json({error})
+    return res.status(500).json({error})
   }
 }
 
@@ -20,9 +20,9 @@ async function update(req, res) {
     const addition = thought.additions.id(req.params.id)
     addition.set(req.body)
     await thought.save()
-    res.status(201).json({thought})
+    return res.status(201).json({thought})
   } catch (error) {
-    res.status(500).json({error})
+    return res.status(500).json({error})
   }
 }
 
@@ -34,9 +34,9 @@ async function deleteAddition (req, res) {
     }
     thought.additions.remove(req.params.id)
     await thought.save()
-    res.status(202).json({thought})
+    return res.status(202).json({thought})
   } catch (error) {
-    res.status(500).json({error})
+    return res.status(500).json({error})
   }
 }
 

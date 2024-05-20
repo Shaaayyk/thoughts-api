@@ -4,6 +4,7 @@ const logger = require('morgan')
 require('dotenv').config();
 require('./config/database');
 
+const usersRouter = require('./routes/users.js')
 const thoughtsRouter = require('./routes/thoughts.js')
 const additionsRouter = require('./routes/additions.js')
 
@@ -13,6 +14,7 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+app.use('/api', usersRouter);
 app.use('/api/thoughts', thoughtsRouter);
 app.use('/api', additionsRouter);
 
