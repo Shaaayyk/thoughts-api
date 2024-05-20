@@ -14,7 +14,9 @@ const thoughtSchema = new mongoose.Schema({
   dueBoolean: { type: Boolean, default: false },
   dueDate: { type: Date },
 
-  additions: [additionSchema]
+  additions: [additionSchema],
+
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 }, {
   timestamps: true,
 })

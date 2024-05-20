@@ -31,7 +31,7 @@ async function login(req, res) {
     return res.status(500).json({ error });
   }
 }
-
+// helper function
 function createJWT(user) {
   return jwt.sign(
     { user },

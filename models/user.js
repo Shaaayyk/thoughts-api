@@ -11,20 +11,21 @@ const userSchema = new mongoose.Schema({
   timestamps: true,
 })
 
+// remove password when coverted to JSON
 userSchema.set('toJSON', {
   transform: function (doc, ret, options) {
     delete ret.password
     return ret
   }
 })
-
+// remove password when coverted to an object in populate
 userSchema.set('toObject', {
   transform: function (doc, ret, options) {
     delete ret.password
     return ret
   }
 })
-
+// check to see if the password was changed, if it was then hash it with bcrypt
 userSchema.pre('save', function (next) {
   const user = this;
   if (!user.isModified('password')) return next();
