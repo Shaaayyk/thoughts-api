@@ -26,18 +26,19 @@ userSchema.set('toObject', {
 })
 
 userSchema.pre('save', function (next) {
-  if (!this.isModified('password')) return next()
-  bcrypt.hash(this.password, process.env.SALT_ROUNDS, function (error, hash) {
-    if (error) return next(error)
-    this.password = hash
-    next()
+  const user = this;
+  if (!user.isModified('password')) return next();
+  bcrypt.hash(user.password, parseInt(process.env.SALT_ROUNDS), function (error, hash) {
+    if (error) return next(error);
+    user.password = hash
+    next();
   })
 })
 
 userSchema.methods.comparePassword = function (tryPassword, cb) {
   bcrypt.compare(tryPassword, this.password, function (error, isMatch) {
-    if (error) return cb(error)
-    cb(null, isMatch)
+    if (error) return cb(error);
+    cb(null, isMatch);
   })
 }
 

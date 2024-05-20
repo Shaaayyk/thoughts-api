@@ -8,26 +8,27 @@ async function signUp(req, res) {
     })
     await user.save()
     const token = createJWT(user)
-    return res.status(201).json({token})
+    return res.status(201).json({ token, user });
   } catch (error) {
-    return res.status(500).json({error})
+    console.log(error)
+    return res.status(500).json({ error });
   }
 }
 
 async function login(req, res) {
   try {
     const user = await UserModel.findOne({ email: req.body.email })
-    if (!user) return res.status(500).json({ error: "error here" })
+    if (!user) return res.status(500).json({ error: "error here" });
     user.comparePassword(req.body.password, (error, isMatch) => {
       if (isMatch) {
         const token = createJWT(user)
-        return res.status(200).json({token})
+        return res.status(200).json({ token, user });
       } else {
-        return res.status(500).json({error})
+        return res.status(500).json({ error });
       }
     })
   } catch (error) {
-    return res.status(500).json({error})
+    return res.status(500).json({ error });
   }
 }
 
@@ -35,8 +36,8 @@ function createJWT(user) {
   return jwt.sign(
     { user },
     process.env.SECRET_KEY,
-    {expiresIn: '24h'}
-  )
+    { expiresIn: '24h' }
+  );
 }
 
 module.exports = {
