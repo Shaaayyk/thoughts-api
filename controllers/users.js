@@ -1,7 +1,7 @@
 const UserModel = require('../models/user.js')
 const jwt = require('jsonwebtoken')
 
-async function signUp(req, res) {
+async function signup(req, res) {
   try {
     const user = new UserModel({
       ...req.body,
@@ -41,6 +41,6 @@ function createJWT(user) {
 }
 
 module.exports = {
-  signUp,
+  signup,
   login,
 }
