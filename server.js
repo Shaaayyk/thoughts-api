@@ -1,5 +1,6 @@
 const express = require('express')
 const logger = require('morgan')
+const cors = require('cors')
 
 // env variables
 require('dotenv').config();
@@ -13,6 +14,7 @@ const additionsRouter = require('./routes/additions.js')
 
 const app = express()
 
+app.use(cors())
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
