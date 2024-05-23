@@ -12,7 +12,7 @@ const thoughtSchema = new mongoose.Schema({
   content: { type: String, required: true },
   completed: { type: Boolean, default: false },
   dueBoolean: { type: Boolean, default: false },
-  dueDate: { type: Date },
+  dueDate: { type: Date, default: null },
 
   additions: [additionSchema],
 
